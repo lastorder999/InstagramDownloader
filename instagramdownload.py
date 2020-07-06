@@ -12,14 +12,14 @@ def GetUrlImage(URL):
 	actualURLImage = metaFile['content']
 	return actualURLImage
 
-def GetNameImage(URL):
-	URLWasSplitBySlash = URL.split('/')[-1]
+def GetNameImage(URLImage):
+	URLWasSplitBySlash = URLImage.split('/')[-1]
 	imageFileName = URLWasSplitBySlash.split('?')[0]
 	return imageFileName
 
 def DowloadImage(nameImage, URLImage):
 	r = request.get(URLImage)
-	downloadCommand = '''wget -o {} "{}"'''
+	downloadCommand = '''wget -O {} "{}"'''
 	os.system(downloadCommand.format(nameImage, URLImage))
 
 
