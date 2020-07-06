@@ -18,12 +18,19 @@ def GetNameImage(URLImage):
 	return imageFileName
 
 def DowloadImage(nameImage, URLImage):
-	r = request.get(URLImage)
-	downloadCommand = '''wget -O {} "{}"'''
-	os.system(downloadCommand.format(nameImage, URLImage))
+	r = requests.get(URLImage)
+	with open(nameImage, 'wb') as file:
+		file.write(r.content)
+	# downloadCommand = '''wget -O {} "{}"'''
+	# os.system(downloadCommand.format(nameImage, URLImage))
 
+def main():
+	url = "https://www.instagram.com/p/B9NvHhWpSJ0/"
+	urlimage = GetUrlImage(url)
+	nameimage = GetNameImage(urlimage)
+	DowloadImage(nameimage, urlimage)
 
-
+main()
 # from selenium import webdriver
 # driver = webdriver.Firefox(executable_path=r'C:\Users\*****\Downloads\geckodriver-v0.26.0-win64\geckodriver.exe')
 # driver.get(link)
