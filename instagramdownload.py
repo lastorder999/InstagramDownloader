@@ -1,13 +1,11 @@
 from bs4 import BeautifulSoup
 import requests
-import os
-
+import lxml
 
 
 def GetUrlImage(URL):
 	r = requests.get(URL)
-	htmlParser = BeautifulSoup(r.text, 'html.parser')
-	# linkImage = soup.find_all("meta",{"property":"og:image"})
+	htmlParser = BeautifulSoup(r.text, 'lxml')
 	metaFile = htmlParser.find(property="og:image")
 	actualURLImage = metaFile['content']
 	return actualURLImage
@@ -19,10 +17,9 @@ def GetNameImage(URLImage):
 
 def DowloadImage(nameImage, URLImage):
 	r = requests.get(URLImage)
-	with open(nameImage, 'wb') as file:
-		file.write(r.content)
-	# downloadCommand = '''wget -O {} "{}"'''
-	# os.system(downloadCommand.format(nameImage, URLImage))
+	with open(nameImage, 'wb') as fileImage:
+		fileImage.write(r.content)
+	
 
 def main():
 	url = "https://www.instagram.com/p/B9NvHhWpSJ0/"
@@ -31,10 +28,3 @@ def main():
 	DowloadImage(nameimage, urlimage)
 
 main()
-# from selenium import webdriver
-# driver = webdriver.Firefox(executable_path=r'C:\Users\*****\Downloads\geckodriver-v0.26.0-win64\geckodriver.exe')
-# driver.get(link)
-# html = driver.execute_script("return document.documentElement.outerHTML;")
-# html = driver.execute_script("return document.documentElement.innerHTML;")
-# html = driver.page_source
-# find_all("img",{"style":"object-fit: cover;"})
