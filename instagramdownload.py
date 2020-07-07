@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import lxml
+import sys
 
 
 def GetUrlImage(URL):
@@ -20,11 +21,10 @@ def DowloadImage(nameImage, URLImage):
 	with open(nameImage, 'wb') as fileImage:
 		fileImage.write(r.content)
 	
-
-def main():
-	url = "https://www.instagram.com/p/B9NvHhWpSJ0/"
+def main(url):
 	urlimage = GetUrlImage(url)
 	nameimage = GetNameImage(urlimage)
 	DowloadImage(nameimage, urlimage)
 
-main()
+if __name__ == '__main__':
+	main(sys.argv[1])
