@@ -79,10 +79,15 @@ def concatenate_url(url):
     return url + rear
 
 
+def requests_url(url):
+    header = {'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_1_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.1 Mobile/15E148 Safari/604.1'}
+    content = requests.get(url, headers=header)
+    return content
+
 def find_url_media(url_instagram):
     """Classify"""
     url_instagram_json = concatenate_url(url_instagram)
-    content = requests.get(url_instagram_json)
+    content = requests_url(url_instagram_json)
     content_json = content.json()
     content_at_shortcode_media = go_into_shortcode_media(content_json)
     type_file = go_into_type_name(content_at_shortcode_media)
@@ -104,7 +109,7 @@ def generate_name(url_media):
 
 def download_media(name_media, url_media):
     """Save image or video by write binary."""
-    content_media = requests.get(url_media)
+    content_media = requests_url(url_media)
 
     with open(name_media, 'wb') as file:
         file.write(content_media.content)
